@@ -3,7 +3,7 @@ import { Row, Col, Button, Typography } from "antd";
 import { ToDoContext } from "../../containers/Main";
 const { Paragraph } = Typography;
 
-export const ToDoItem = ({ oneToDoItem, indexOfTodoInList }) => {
+export const ToDoItem = ({ oneToDoItem, idOfTodoInList }) => {
   const { onChangeToDoItem, deleteToDoItem } = useContext(ToDoContext);
   return (
     <Row justify="center">
@@ -17,7 +17,7 @@ export const ToDoItem = ({ oneToDoItem, indexOfTodoInList }) => {
                     <Paragraph
                       editable={{
                         onChange: (editedToDo) =>
-                          onChangeToDoItem(editedToDo, indexOfTodoInList),
+                          onChangeToDoItem(editedToDo, idOfTodoInList),
                       }}
                     >
                       {oneToDoItem}
@@ -28,7 +28,7 @@ export const ToDoItem = ({ oneToDoItem, indexOfTodoInList }) => {
             </div>
           </Col>
           <Col md={2}>
-            <Button danger onClick={() => deleteToDoItem(indexOfTodoInList)}>
+            <Button danger onClick={() => deleteToDoItem(idOfTodoInList)}>
               Delete
             </Button>
           </Col>

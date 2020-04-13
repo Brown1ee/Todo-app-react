@@ -6,17 +6,15 @@ export const ToDoList = () => {
   const { todoItemsList } = useContext(ToDoContext);
   return (
     <div className="margin-top-row text-color">
-      {Array.isArray(todoItemsList)
-        ? todoItemsList.map((oneToDoItem, indexOfTodoInList) => {
-            return (
-              <ToDoItem
-                oneToDoItem={oneToDoItem}
-                indexOfTodoInList={indexOfTodoInList}
-                key={indexOfTodoInList}
-              />
-            );
-          })
-        : todoItemsList}
+      {todoItemsList.map((oneToDoItem) => {
+        return (
+          <ToDoItem
+            oneToDoItem={oneToDoItem.todo}
+            idOfTodoInList={oneToDoItem.id}
+            key={oneToDoItem.id}
+          />
+        );
+      })}
     </div>
   );
 };

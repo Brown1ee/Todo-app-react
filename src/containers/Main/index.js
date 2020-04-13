@@ -7,22 +7,19 @@ export const Main = () => {
   const [todoItemsList, setToDoItem] = useState([]);
 
   const sendTodoItem = (todo) => {
-    todo && setToDoItem([...todoItemsList, todo]);
+    setToDoItem([...todoItemsList, todo]);
   };
 
-  const deleteToDoItem = (indexOfItemToDelete) => {
-    setToDoItem(
-      todoItemsList.filter(
-        (item, indexOfTodo) => indexOfTodo !== indexOfItemToDelete
-      )
-    );
+  const deleteToDoItem = (idOfItemToDelete) => {
+    setToDoItem(todoItemsList.filter((item) => item.id !== idOfItemToDelete));
   };
-  const onChangeToDoItem = (editedToDo, index) => {
+
+  const onChangeToDoItem = (editedToDo, id) => {
     if (!editedToDo) {
-      deleteToDoItem(index);
+      deleteToDoItem(id);
     } else {
       let todoList = [...todoItemsList];
-      todoList[index] = editedToDo;
+      todoList[todoList.findIndex((elem) => elem.id === id)].todo = editedToDo;
       setToDoItem(todoList);
     }
   };

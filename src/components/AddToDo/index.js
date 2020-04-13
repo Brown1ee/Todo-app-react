@@ -21,7 +21,7 @@ export const AddToDo = () => {
           <Col md={2}>
             <Button
               onClick={() => {
-                sendTodoItem(todo);
+                sendTodoItem({ todo, id: Date.now() });
                 setTodo("");
               }}
             >
