@@ -1,10 +1,14 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { AddToDo } from "../../components/AddToDo/index.js";
 import { List } from "../List/index";
 export const ToDoContext = createContext({});
 
 export const Main = () => {
   const [todoItemsList, setToDoItem] = useState([]);
+
+  useEffect(() => {
+    console.log("todoItemsList", todoItemsList);
+  }, [todoItemsList]);
 
   const sendTodoItem = (todo) => {
     setToDoItem([...todoItemsList, todo]);
