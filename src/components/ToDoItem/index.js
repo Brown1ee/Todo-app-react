@@ -18,18 +18,16 @@ export const ToDoItem = ({ oneToDoItem, idOfTodoInList }) => {
   const inputRef = useRef();
 
   const editable = () => {
-    let aux = displayParagraph;
     setDisplayPharagraph(displayInput);
-    setDisplayInput(aux);
+    setDisplayInput(displayParagraph);
     setTimeout(() => {
       inputRef.current.focus();
     }, 50);
   };
 
   const handleBlur = () => {
-    let aux = displayParagraph;
     setDisplayPharagraph(displayInput);
-    setDisplayInput(aux);
+    setDisplayInput(displayParagraph);
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

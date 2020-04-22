@@ -5,9 +5,11 @@ export const reducer = (state, action) => {
     case "deleteToDoItem":
       return state.filter((item) => item.id !== action.payload);
     case "onChangeToDoItem":
-      let prevState = [...state];
-      prevState[prevState.findIndex((elem) => elem.id === action.payload.id)].todo = action.payload.editedToDo;
-      return prevState;
+      return state.map((toDoItem) => {
+        if (toDoItem.id === action.payload.id)
+          return { ...toDoItem, todo: action.payload.editedToDo };
+        return toDoItem;
+      });
     default:
       return state;
   }
