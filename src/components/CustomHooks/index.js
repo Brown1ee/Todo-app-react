@@ -1,4 +1,6 @@
-export const useGetColor = () => {
+import { useMemo } from "react";
+
+export const useGetColor = (arrOfId) => {
   const ourColors = [
     "#f5222d",
     "#9e1068",
@@ -9,7 +11,9 @@ export const useGetColor = () => {
     "#fa541c",
     "#ffec3d",
   ];
+
   const randomIndex = Math.floor(Math.random() * 7);
   const randomColor = ourColors[randomIndex];
-  return randomColor;
+
+  return useMemo(() => randomColor, arrOfId) ;
 };

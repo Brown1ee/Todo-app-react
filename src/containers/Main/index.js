@@ -12,18 +12,14 @@ export const Main = () => {
   };
 
   const deleteToDoItem = (idOfItemToDelete) => {
-    dispatch({ type: "deleteToDoItem", payload: todoItemsList.filter((item) => item.id !== idOfItemToDelete) });
-
+    dispatch({ type: "deleteToDoItem", payload: idOfItemToDelete });
   };
 
   const onChangeToDoItem = (editedToDo, id) => {
     if (!editedToDo) {
       deleteToDoItem(id);
     } else {
-      let todoList = [...todoItemsList];
-      todoList[todoList.findIndex((elem) => elem.id === id)].todo = editedToDo;
-    dispatch({ type: "onChangeToDoItem", todoList });
-
+      dispatch({ type: "onChangeToDoItem", payload:{id, editedToDo} });
     }
   };
 
