@@ -1,21 +1,19 @@
-import React, { createContext, useState, useEffect } from "react";
-import { AddToDo } from "../../components/AddToDo/index.js";
+import React, { createContext, useReducer } from "react";
+import { AddtoDo } from "../../components/AddtoDo/index.js";
 import { List } from "../List/index";
+import { reducer } from "../../components/Reducer";
 export const ToDoContext = createContext({});
 
 export const Main = () => {
-  const [todoItemsList, setToDoItem] = useState([]);
 
-  useEffect(() => {
-    console.log("todoItemsList", todoItemsList);
-  }, [todoItemsList]);
-
+  const [todoItemsList, dispatch] = useReducer(reducer, []);
   const sendTodoItem = (todo) => {
-    setToDoItem([...todoItemsList, todo]);
+    dispatch({ type: "addToList", todo });
   };
 
   const deleteToDoItem = (idOfItemToDelete) => {
-    setToDoItem(todoItemsList.filter((item) => item.id !== idOfItemToDelete));
+    dispatch({ type: "deleteToDoItem", payload: todoItemsList.filter((item) => item.id !== idOfItemToDelete) });
+
   };
 
   const onChangeToDoItem = (editedToDo, id) => {
@@ -24,7 +22,8 @@ export const Main = () => {
     } else {
       let todoList = [...todoItemsList];
       todoList[todoList.findIndex((elem) => elem.id === id)].todo = editedToDo;
-      setToDoItem(todoList);
+    dispatch({ type: "onChangeToDoItem", todoList });
+
     }
   };
 
@@ -37,9 +36,9 @@ export const Main = () => {
 
   return (
     <div className="margin-top">
-      <h1 className="text-color">To Do App</h1>
+      <h1 className="text-color text-align">To do App</h1>
       <ToDoContext.Provider value={contextValue}>
-        <AddToDo />
+        <AddtoDo />
         <List />
       </ToDoContext.Provider>
     </div>

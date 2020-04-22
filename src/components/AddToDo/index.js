@@ -1,11 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { Input, Button, Row, Col } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { ToDoContext } from "../../containers/Main";
-export const AddToDo = () => {
-  const [todo, setTodo] = useState("");
 
+export const AddtoDo = () => {
+  const [todo, setTodo] = useState("");
   const { sendTodoItem } = useContext(ToDoContext);
+
+  const addTaskInputRef = useRef();
+  const addButtonRef = useRef();
 
   return (
     <Row justify="center" className="margin-top-row">
@@ -16,14 +19,23 @@ export const AddToDo = () => {
               placeholder="I want to..."
               value={todo}
               onChange={(e) => setTodo(e.target.value)}
+              ref={addTaskInputRef}
+              onKeyDown={(e) => {
+                if (e.keyCode === 13) {
+                  addButtonRef.current.handleClick();
+                }
+              }}
             />
           </Col>
           <Col md={2}>
             <Button
+              ref={addButtonRef}
               onClick={() => {
-                sendTodoItem({ todo, id: Date.now() });
+                todo && sendTodoItem({ todo, id: Date.now() });
                 setTodo("");
+                addTaskInputRef.current.focus();
               }}
+              block
             >
               <PlusCircleOutlined />
             </Button>
