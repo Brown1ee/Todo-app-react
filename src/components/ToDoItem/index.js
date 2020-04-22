@@ -29,9 +29,11 @@ export const ToDoItem = ({ oneToDoItem, idOfTodoInList }) => {
     setDisplayPharagraph(displayInput);
     setDisplayInput(displayParagraph);
   };
+  const handleChangeInput = (e) => {
+    onChangeToDoItem(e.target.value, idOfTodoInList);
+  };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memorizedColor = useGetColor([idOfTodoInList]);
+  const memorizedColor = useGetColor(idOfTodoInList);
 
   return (
     <li style={{ color: `${memorizedColor}` }}>
@@ -44,9 +46,7 @@ export const ToDoItem = ({ oneToDoItem, idOfTodoInList }) => {
                 ref={inputRef}
                 style={{ marginBottom: "0.5rem", ...displayInput }}
                 value={oneToDoItem}
-                onChange={(e) =>
-                  onChangeToDoItem(e.target.value, idOfTodoInList)
-                }
+                onChange={(e) => handleChangeInput(e)}
                 onBlur={handleBlur}
               />
               <p style={displayParagraph}>{oneToDoItem}</p>

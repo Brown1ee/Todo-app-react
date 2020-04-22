@@ -14,6 +14,6 @@ export const useGetColor = (arrOfId) => {
 
   const randomIndex = Math.floor(Math.random() * 7);
   const randomColor = ourColors[randomIndex];
-
-  return useMemo(() => randomColor, arrOfId) ;
+// eslint-disable-next-line
+  return useMemo(() => randomColor, [arrOfId]);
 };

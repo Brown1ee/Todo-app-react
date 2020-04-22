@@ -1,0 +1,3 @@
+export const ADD_TO_LIST = 'ADD_TO_LIST';
+export const DELETE_TO_DO_ITEM = 'DELETE_TO_DO_ITEM';
+export const ON_CHANGE_TO_DO_ITEM = 'ON_CHANGE_TO_DO_ITEM'

@@ -10,6 +10,18 @@ export const AddtoDo = () => {
   const addTaskInputRef = useRef();
   const addButtonRef = useRef();
 
+  const handleAddToDo = ()=>{
+    todo && sendTodoItem({ todo, id: Date.now() });
+    setTodo("");
+    addTaskInputRef.current.focus();
+  }
+
+  const handleKeyDown = (e)=>{
+    if (e.keyCode === 13) {
+      addButtonRef.current.handleClick();
+    }
+  }
+
   return (
     <Row justify="center" className="margin-top-row">
       <Col md={12}>
@@ -20,21 +32,13 @@ export const AddtoDo = () => {
               value={todo}
               onChange={(e) => setTodo(e.target.value)}
               ref={addTaskInputRef}
-              onKeyDown={(e) => {
-                if (e.keyCode === 13) {
-                  addButtonRef.current.handleClick();
-                }
-              }}
+              onKeyDown={(e) => handleKeyDown(e)}
             />
           </Col>
           <Col md={2}>
             <Button
               ref={addButtonRef}
-              onClick={() => {
-                todo && sendTodoItem({ todo, id: Date.now() });
-                setTodo("");
-                addTaskInputRef.current.focus();
-              }}
+              onClick={handleAddToDo}
               block
             >
               <PlusCircleOutlined />
