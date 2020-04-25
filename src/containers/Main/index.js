@@ -1,30 +1,26 @@
-import React, { createContext, useState, useEffect } from "react";
-import { AddToDo } from "../../components/AddToDo/index.js";
+import React, { createContext, useReducer } from "react";
+import { AddtoDo } from "../../components/AddtoDo/index.js";
 import { List } from "../List/index";
+import { reducer } from "../../components/Reducer";
+import {ADD_TO_LIST, DELETE_TO_DO_ITEM, ON_CHANGE_TO_DO_ITEM}from '../../components/Reducer/actionType'
 export const ToDoContext = createContext({});
 
 export const Main = () => {
-  const [todoItemsList, setToDoItem] = useState([]);
 
-  useEffect(() => {
-    console.log("todoItemsList", todoItemsList);
-  }, [todoItemsList]);
-
+  const [todoItemsList, dispatch] = useReducer(reducer, []);
   const sendTodoItem = (todo) => {
-    setToDoItem([...todoItemsList, todo]);
+    dispatch({ type: ADD_TO_LIST, payload: todo });
   };
 
   const deleteToDoItem = (idOfItemToDelete) => {
-    setToDoItem(todoItemsList.filter((item) => item.id !== idOfItemToDelete));
+    dispatch({ type: DELETE_TO_DO_ITEM, payload: idOfItemToDelete });
   };
 
   const onChangeToDoItem = (editedToDo, id) => {
     if (!editedToDo) {
       deleteToDoItem(id);
     } else {
-      let todoList = [...todoItemsList];
-      todoList[todoList.findIndex((elem) => elem.id === id)].todo = editedToDo;
-      setToDoItem(todoList);
+      dispatch({ type: ON_CHANGE_TO_DO_ITEM, payload:{id, editedToDo} });
     }
   };
 
@@ -37,9 +33,9 @@ export const Main = () => {
 
   return (
     <div className="margin-top">
-      <h1 className="text-color">To Do App</h1>
+      <h1 className="text-color text-align">To do App</h1>
       <ToDoContext.Provider value={contextValue}>
-        <AddToDo />
+        <AddtoDo />
         <List />
       </ToDoContext.Provider>
     </div>

@@ -1,39 +1,67 @@
-import React, { useContext } from "react";
-import { Row, Col, Button, Typography } from "antd";
+import React, { useContext, useState, useRef } from "react";
+import { Row, Col, Button } from "antd";
 import { ToDoContext } from "../../containers/Main";
-const { Paragraph } = Typography;
+import { EditOutlined } from "@ant-design/icons";
+import { useGetColor } from "../CustomHooks";
 
 export const ToDoItem = ({ oneToDoItem, idOfTodoInList }) => {
   const { onChangeToDoItem, deleteToDoItem } = useContext(ToDoContext);
+
+  const [displayInput, setDisplayInput] = useState({
+    display: "none",
+  });
+
+  const [displayParagraph, setDisplayPharagraph] = useState({
+    display: "block",
+  });
+
+  const inputRef = useRef();
+
+  const editable = () => {
+    setDisplayPharagraph(displayInput);
+    setDisplayInput(displayParagraph);
+    setTimeout(() => {
+      inputRef.current.focus();
+    }, 0);
+  };
+
+  const handleBlur = () => {
+    setDisplayPharagraph(displayInput);
+    setDisplayInput(displayParagraph);
+  };
+  const handleChangeInput = (e) => {
+    onChangeToDoItem(e.target.value, idOfTodoInList);
+  };
+
+  const memorizedColor = useGetColor(idOfTodoInList);
+
   return (
-    <Row justify="center">
-      <Col md={20}>
-        <Row justify="space-around">
-          <Col md={20}>
-            <div className="container-items-list">
-              {oneToDoItem && (
-                <ul className="circle-list-style">
-                  <li>
-                    <Paragraph
-                      editable={{
-                        onChange: (editedToDo) =>
-                          onChangeToDoItem(editedToDo, idOfTodoInList),
-                      }}
-                    >
-                      {oneToDoItem}
-                    </Paragraph>
-                  </li>
-                </ul>
-              )}
-            </div>
-          </Col>
-          <Col md={2}>
-            <Button danger onClick={() => deleteToDoItem(idOfTodoInList)}>
-              Delete
-            </Button>
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+    <li style={{ color: `${memorizedColor}` }}>
+      <Row justify="center">
+        <Col md={20}>
+          <Row justify="center">
+            <Col md={23}>
+              <input
+                autoFocus={true}
+                ref={inputRef}
+                style={{ marginBottom: "0.5rem", ...displayInput }}
+                value={oneToDoItem}
+                onChange={(e) => handleChangeInput(e)}
+                onBlur={handleBlur}
+              />
+              <p style={displayParagraph}>{oneToDoItem}</p>
+            </Col>
+            <Col md={1}>
+              <EditOutlined onClick={editable} />
+            </Col>
+          </Row>
+        </Col>
+        <Col md={4}>
+          <Button danger onClick={() => deleteToDoItem(idOfTodoInList)} block>
+            Delete
+          </Button>
+        </Col>
+      </Row>
+    </li>
   );
 };
