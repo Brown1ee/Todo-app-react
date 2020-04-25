@@ -22,7 +22,7 @@ export const ToDoItem = ({ oneToDoItem, idOfTodoInList }) => {
     setDisplayInput(displayParagraph);
     setTimeout(() => {
       inputRef.current.focus();
-    }, 50);
+    }, 0);
   };
 
   const handleBlur = () => {
